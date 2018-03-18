@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 /**
  * @addtogroup opcache
  * @{
@@ -21,39 +21,38 @@ require_once __DIR__ . '/../libs/OpCacheTraits.php';  // diverse Klassen
  */
 class OpCacheModule extends IPSModule
 {
-
     use VariableHelper,
         DebugHelper,
         VariableProfile;
-    static $VariableTyp = [
-        "used_memory"               => 2,
-        "free_memory"               => 2,
-        "wasted_memory"             => 2,
-        "current_wasted_percentage" => 2,
-        "num_cached_scripts"        => 1,
-        "num_cached_keys"           => 1,
-        "max_cached_keys"           => 1,
-        "hits"                      => 1,
-        "start_time"                => 1,
-        "last_restart_time"         => 1,
-        "manual_restarts"           => 1,
-        "misses"                    => 1,
-        "opcache_hit_rate"          => 2,
-        "used_memory_percentage"    => 2,
-        "free_memory_percentage"    => 2,
-        "total_memory"              => 2
+    public static $VariableTyp = [
+        'used_memory'               => 2,
+        'free_memory'               => 2,
+        'wasted_memory'             => 2,
+        'current_wasted_percentage' => 2,
+        'num_cached_scripts'        => 1,
+        'num_cached_keys'           => 1,
+        'max_cached_keys'           => 1,
+        'hits'                      => 1,
+        'start_time'                => 1,
+        'last_restart_time'         => 1,
+        'manual_restarts'           => 1,
+        'misses'                    => 1,
+        'opcache_hit_rate'          => 2,
+        'used_memory_percentage'    => 2,
+        'free_memory_percentage'    => 2,
+        'total_memory'              => 2
     ];
-    static $VariableProfile = [
-        "used_memory"               => 'OpCache.MB',
-        "free_memory"               => 'OpCache.MB',
-        "wasted_memory"             => 'OpCache.MB',
-        "current_wasted_percentage" => 'OpCache.Intensity',
-        "start_time"                => '~UnixTimestamp',
-        "last_restart_time"         => '~UnixTimestamp',
-        "opcache_hit_rate"          => 'OpCache.Intensity',
-        "used_memory_percentage"    => 'OpCache.Intensity',
-        "free_memory_percentage"    => 'OpCache.Intensity',
-        "total_memory"              => 'OpCache.MB'
+    public static $VariableProfile = [
+        'used_memory'               => 'OpCache.MB',
+        'free_memory'               => 'OpCache.MB',
+        'wasted_memory'             => 'OpCache.MB',
+        'current_wasted_percentage' => 'OpCache.Intensity',
+        'start_time'                => '~UnixTimestamp',
+        'last_restart_time'         => '~UnixTimestamp',
+        'opcache_hit_rate'          => 'OpCache.Intensity',
+        'used_memory_percentage'    => 'OpCache.Intensity',
+        'free_memory_percentage'    => 'OpCache.Intensity',
+        'total_memory'              => 'OpCache.MB'
     ];
 
     /**
@@ -123,6 +122,7 @@ class OpCacheModule extends IPSModule
     }
 
     //################# PUBLIC
+
     /**
      * IPS-Instanz Funktion OPCACHE_Update.
      *
@@ -148,16 +148,15 @@ class OpCacheModule extends IPSModule
             'wasted_memory'          => $status['memory_usage']['wasted_memory'] / 1024 / 1024,
                 ]
         );
-        unset($overview["oom_restarts"]);
-        unset($overview["hash_restarts"]);
-        unset($overview["blacklist_misses"]);
-        unset($overview["blacklist_miss_ratio"]);
+        unset($overview['oom_restarts']);
+        unset($overview['hash_restarts']);
+        unset($overview['blacklist_misses']);
+        unset($overview['blacklist_miss_ratio']);
         foreach ($overview as $Ident => $Value) {
             $this->SetValue($Ident, $Value);
         }
         return true;
     }
-
 }
 
 /* @} */

@@ -1,7 +1,7 @@
 <?php
 
-declare(strict_types = 1);
-/**
+declare(strict_types=1);
+/*
  * @addtogroup opcace
  * @{
  *
@@ -191,7 +191,7 @@ trait VariableHelper
         if (array_key_exists($Ident, self::$VariableProfile)) {
             $Profile = self::$VariableProfile[$Ident];
         } else {
-            $Profile = "";
+            $Profile = '';
         }
         $this->MaintainVariable($Ident, $this->Translate($Ident), $IpsVarType, $Profile, 0, true);
 
@@ -201,7 +201,6 @@ trait VariableHelper
             SetValue($this->GetIDForIdent($Ident), $Value);
         }
     }
-
 }
 
 trait VariableProfile
@@ -294,7 +293,6 @@ trait VariableProfile
             }
         }
     }
-
 }
 
 /**
@@ -326,7 +324,6 @@ trait DebugHelper
             parent::SendDebug($Message, $Data, $Format);
         }
     }
-
 }
 
 /* @} */
