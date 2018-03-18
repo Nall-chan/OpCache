@@ -3,7 +3,7 @@
     "name": "OpCacheModule",
     "type": 3,
     "vendor": "Nall-chan",
-    "aliases": ["OpCache Informationen"],
+    "aliases": ["OpCache Information"],
     "parentRequirements": [],
     "childRequirements": [],
     "implemented": [],

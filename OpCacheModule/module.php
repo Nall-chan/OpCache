@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 /**
  * @addtogroup opcache
  * @{
@@ -21,9 +21,40 @@ require_once __DIR__ . '/../libs/OpCacheTraits.php';  // diverse Klassen
  */
 class OpCacheModule extends IPSModule
 {
+
     use VariableHelper,
         DebugHelper,
         VariableProfile;
+    static $VariableTyp = [
+        "used_memory"               => 2,
+        "free_memory"               => 2,
+        "wasted_memory"             => 2,
+        "current_wasted_percentage" => 2,
+        "num_cached_scripts"        => 1,
+        "num_cached_keys"           => 1,
+        "max_cached_keys"           => 1,
+        "hits"                      => 1,
+        "start_time"                => 1,
+        "last_restart_time"         => 1,
+        "manual_restarts"           => 1,
+        "misses"                    => 1,
+        "opcache_hit_rate"          => 2,
+        "used_memory_percentage"    => 2,
+        "free_memory_percentage"    => 2,
+        "total_memory"              => 2
+    ];
+    static $VariableProfile = [
+        "used_memory"               => 'OpCache.MB',
+        "free_memory"               => 'OpCache.MB',
+        "wasted_memory"             => 'OpCache.MB',
+        "current_wasted_percentage" => 'OpCache.Intensity',
+        "start_time"                => '~UnixTimestamp',
+        "last_restart_time"         => '~UnixTimestamp',
+        "opcache_hit_rate"          => 'OpCache.Intensity',
+        "used_memory_percentage"    => 'OpCache.Intensity',
+        "free_memory_percentage"    => 'OpCache.Intensity',
+        "total_memory"              => 'OpCache.MB'
+    ];
 
     /**
      * Interne Funktion des SDK.
@@ -49,58 +80,28 @@ class OpCacheModule extends IPSModule
     public function ApplyChanges()
     {
         $this->RegisterMessage(0, IPS_KERNELSTARTED);
+        $this->RegisterProfileFloat('OpCache.MB', 'Database', '', ' MB', 0, 0, 0, 3);
+        $this->RegisterProfileFloat('OpCache.Intensity', 'Intensity', '', ' %', 0, 0, 0, 2);
 
         parent::ApplyChanges();
 
-//        $this->RegisterProfileIntegerEx("MS35.Program", "Gear", "", "", array(
-//            array(1, 'Farbwechsel 1', '', -1),
-//            array(2, 'Farbwechsel 2', '', -1),
-//            array(3, 'Farbwechsel 3', '', -1),
-//            array(4, 'Gewitter', '', -1),
-//            array(5, 'Kaminfeuer', '', -1),
-//            array(6, 'Sonnenauf- & untergang', '', -1),
-//            array(7, 'Farbblitze', '', -1),
-//            array(8, 'User 1', '', -1),
-//            array(9, 'User 2', '', -1)
-//        ));
-//
-//        $this->RegisterProfileIntegerEx("MS35.PrgStatus", "Bulb", "", "", array(
-//            array(1, 'Play', '', -1),
-//            array(2, 'Pause', '', -1),
-//            array(3, 'Stop', '', -1)
-//        ));
-//
-//        $this->RegisterProfileIntegerEx("MS35.Speed", "Intensity", "", "", array(
-//            array(0, 'normal', '', -1),
-//            array(1, '1/2', '', -1),
-//            array(2, '1/4', '', -1),
-//            array(3, '1/8', '', -1),
-//            array(4, '1/16', '', -1),
-//            array(5, '1/32', '', -1),
-//            array(6, '1/64', '', -1),
-//            array(7, '1/128', '', -1)
-//        ));
-//
-//        $this->RegisterProfileIntegerEx("MS35.Brightness", "Sun", "", "", array(
-//            array(1, 'normal', '', -1),
-//            array(2, '1/2', '', -1),
-//            array(3, '1/3', '', -1)
-//        ));
-//        $this->RegisterVariableBoolean("STATE", "STATE", "~Switch", 1);
-//        $this->RegisterVariableInteger("Color", "Color", "~HexColor", 2);
-//        $this->RegisterVariableInteger("Program", "Program", "MS35.Program", 3);
-//        $this->RegisterVariableInteger("Play", "Play", "MS35.PrgStatus", 4);
-//        $this->RegisterVariableInteger("Speed", "Speed", "MS35.Speed", 5);
-//        $this->RegisterVariableInteger("Brightness", "Brightness", "MS35.Brightness", 6);
-
         if (IPS_GetKernelRunlevel() == KR_READY) {
             $this->Update();
-            $sec = $this->ReadPropertyInteger('Interval');
-            $msec = $sec < 5 ? 0 : $sec * 1000;
-            $this->SetTimerInterval('Update', $msec);
+            $this->SetInterval($this->ReadPropertyInteger('Interval'));
         } else {
-            $this->SetTimerInterval('Update', 0);
+            $this->SetInterval(0);
         }
+    }
+
+    private function SetInterval(int $Seconds)
+    {
+        $isLoaded = extension_loaded('Zend OPcache');
+        if ($isLoaded) {
+            $msec = $Seconds < 5 ? 0 : $Seconds * 1000;
+        } else {
+            $msec = 0;
+        }
+        $this->SetTimerInterval('Update', $msec);
     }
 
     /**
@@ -116,15 +117,12 @@ class OpCacheModule extends IPSModule
         switch ($Message) {
             case IPS_KERNELSTARTED:
                 $this->Update();
-                $sec = $this->ReadPropertyInteger('Interval');
-                $msec = $sec < 5 ? 0 : $sec * 1000;
-                $this->SetTimerInterval('Update', $msec);
+                $this->SetInterval($this->ReadPropertyInteger('Interval'));
                 break;
         }
     }
 
     //################# PUBLIC
-
     /**
      * IPS-Instanz Funktion OPCACHE_Update.
      *
@@ -132,8 +130,34 @@ class OpCacheModule extends IPSModule
      */
     public function Update()
     {
-        return false;
+        if (!extension_loaded('Zend OPcache')) {
+            trigger_error('Zend OPcache ist not loaded', E_USER_NOTICE);
+            return false;
+        }
+        $status = opcache_get_status(false);
+        $config = opcache_get_configuration();
+        $overview = array_merge(
+                $status['memory_usage'], $status['opcache_statistics'], [
+            'used_memory_percentage' => 100 * (
+            ($status['memory_usage']['used_memory'] + $status['memory_usage']['wasted_memory']) / $config['directives']['opcache.memory_consumption']),
+            'free_memory_percentage' => 100 * (
+            $status['memory_usage']['free_memory'] / $config['directives']['opcache.memory_consumption']),
+            'total_memory'           => (float) $config['directives']['opcache.memory_consumption'] / 1024 / 1024,
+            'used_memory'            => $status['memory_usage']['used_memory'] / 1024 / 1024,
+            'free_memory'            => $status['memory_usage']['free_memory'] / 1024 / 1024,
+            'wasted_memory'          => $status['memory_usage']['wasted_memory'] / 1024 / 1024,
+                ]
+        );
+        unset($overview["oom_restarts"]);
+        unset($overview["hash_restarts"]);
+        unset($overview["blacklist_misses"]);
+        unset($overview["blacklist_miss_ratio"]);
+        foreach ($overview as $Ident => $Value) {
+            $this->SetValue($Ident, $Value);
+        }
+        return true;
     }
+
 }
 
 /* @} */

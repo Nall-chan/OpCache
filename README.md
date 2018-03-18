@@ -20,6 +20,13 @@ IPS-Modul für die Visualisierung des PHP OpCache
 
 ## 1. Funktionsumfang
 
+### [OpCache Information:](OpCacheModule/)  
+
+ - Darstellung der Stati des Cache.  
+
+### [OpCache Info-Website:](OpCacheInfoSite/)  
+
+ - Bereitstellung externer Informations-Module als Webhook.  
 
 ## 2. Voraussetzungen
 

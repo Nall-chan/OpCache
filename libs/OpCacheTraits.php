@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 /**
  * @addtogroup opcace
  * @{
@@ -188,7 +188,11 @@ trait VariableHelper
     protected function SetValue($Ident, $Value)
     {
         $IpsVarType = self::$VariableTyp[$Ident];
-        $Profile = self::$VariableProfile[$Ident];
+        if (array_key_exists($Ident, self::$VariableProfile)) {
+            $Profile = self::$VariableProfile[$Ident];
+        } else {
+            $Profile = "";
+        }
         $this->MaintainVariable($Ident, $this->Translate($Ident), $IpsVarType, $Profile, 0, true);
 
         if (method_exists('IPSModule', 'SetValue')) {
@@ -197,6 +201,7 @@ trait VariableHelper
             SetValue($this->GetIDForIdent($Ident), $Value);
         }
     }
+
 }
 
 trait VariableProfile
@@ -214,18 +219,54 @@ trait VariableProfile
      */
     protected function RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize)
     {
-        if (IPS_VariableProfileExists($Name)) {
+        return $this->RegisterProfile(1, $Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize);
+    }
+
+    /**
+     * Erstell und konfiguriert ein VariablenProfil für den Typ float.
+     *
+     * @param string $Name     Name des Profils.
+     * @param string $Icon     Name des Icon.
+     * @param string $Prefix   Prefix für die Darstellung.
+     * @param string $Suffix   Suffix für die Darstellung.
+     * @param int    $MinValue Minimaler Wert.
+     * @param int    $MaxValue Maximaler wert.
+     * @param int    $StepSize Schrittweite
+     */
+    protected function RegisterProfileFloat($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits)
+    {
+        $this->RegisterProfile(2, $Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits);
+    }
+
+    /**
+     * Erstell und konfiguriert ein VariablenProfil für den Typ float.
+     *
+     * @param int    $VarTyp   Typ der Variable
+     * @param string $Name     Name des Profils.
+     * @param string $Icon     Name des Icon.
+     * @param string $Prefix   Prefix für die Darstellung.
+     * @param string $Suffix   Suffix für die Darstellung.
+     * @param int    $MinValue Minimaler Wert.
+     * @param int    $MaxValue Maximaler wert.
+     * @param int    $StepSize Schrittweite
+     */
+    protected function RegisterProfile($VarTyp, $Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits = 0)
+    {
+        if (!IPS_VariableProfileExists($Name)) {
+            IPS_CreateVariableProfile($Name, $VarTyp);
+        } else {
             $profile = IPS_GetVariableProfile($Name);
-            if ($profile['ProfileType'] != 1) {
+            if ($profile['ProfileType'] != $VarTyp) {
                 throw new Exception('Variable profile type does not match for profile ' . $Name, E_USER_WARNING);
             }
-            return true;
         }
-        IPS_CreateVariableProfile($Name, 1);
+
         IPS_SetVariableProfileIcon($Name, $Icon);
         IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
         IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize);
-        return true;
+        if ($VarTyp == vtFloat) {
+            IPS_SetVariableProfileDigits($Name, $Digits);
+        }
     }
 
     /**
@@ -253,6 +294,7 @@ trait VariableProfile
             }
         }
     }
+
 }
 
 /**
@@ -284,6 +326,7 @@ trait DebugHelper
             parent::SendDebug($Message, $Data, $Format);
         }
     }
+
 }
 
 /* @} */

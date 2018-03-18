@@ -1,7 +1,13 @@
 {
     "translations": {
         "de": {
-
+            "Display-Module": "Darstellungs-Modul",
+            "Used": "Verwendet",
+            "OPCache Support is not enabled in IPS!": "OPCache Support ist in IPS nicht aktiviert!",
+            "Enable OPCache": "Aktiviere OPCache",
+            "Please restart IPS to activate OPCache!": "Bitte IPS neustarten um den OPCache zu aktivieren!",
+            "This Version of IPS not support OPCache.": "Diese Version von IPS unterstützt keinen OPCache.",
+            "Open Webhook": "\u00f6ffne Webhook"
         }
     }
 }

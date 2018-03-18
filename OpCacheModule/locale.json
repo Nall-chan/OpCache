@@ -1,7 +1,25 @@
 {
     "translations": {
         "de": {
-
+            "Refresh interval": "Aktualiserungsintervall",
+            "seconds": "sekunden",
+            "Interval": "Intervall",
+            "current_wasted_percentage": "Speicher verschwendet",
+            "free_memory": "Speicher frei",
+            "free_memory_percentage": "Speicher frei",
+            "hits": "Treffer",
+            "last_restart_time": "letzter Reset",
+            "manual_restarts": "Manuelle Resets",
+            "max_cached_keys": "max. Schlüssel",
+            "misses": "Verfehlt",
+            "num_cached_keys": "Anzahl gecachte Schlüssel",
+            "num_cached_scripts": "Anzahl gecachte Scripte",
+            "opcache_hit_rate": "Trefferquote",
+            "start_time": "Startzeitpunkt",
+            "total_memory": "Speicher gesamt",
+            "used_memory": "Speicher benutzt",
+            "used_memory_percentage": "Speicher benutzt",
+            "wasted_memory": "Speicher verschwendet"
         }
     }
 }
