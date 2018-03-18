@@ -1,0 +1,6 @@
+[submodule "libs/opcache-gui"]
+	path = libs/opcache-gui
+	url = https://github.com/amnuts/opcache-gui
+[submodule "libs/opcache-status"]
+	path = libs/opcache-status
+	url = https://github.com/rlerdorf/opcache-status
