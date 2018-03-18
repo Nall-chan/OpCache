@@ -1,23 +1,25 @@
 <?php
 
+declare(strict_types=1);
 /**
  * @addtogroup opcace
  * @{
  *
- * @package       OPCache
  * @file          OpCacheTraits.php
+ *
  * @author        Michael Tröger <micha@nall-chan.net>
  * @copyright     2018 Michael Tröger
  * @license       https://creativecommons.org/licenses/by-nc-sa/4.0/ CC BY-NC-SA 4.0
+ *
  * @version       1.00
  */
-if (!defined("IPS_BASE")) {
+if (!defined('IPS_BASE')) {
     // --- BASE MESSAGE
     define('IPS_BASE', 10000);                             //Base Message
     define('IPS_KERNELSTARTED', IPS_BASE + 1);             //Post Ready Message
     define('IPS_KERNELSHUTDOWN', IPS_BASE + 2);            //Pre Shutdown Message, Runlevel UNINIT Follows
 }
-if (!defined("IPS_KERNELMESSAGE")) {
+if (!defined('IPS_KERNELMESSAGE')) {
     // --- KERNEL
     define('IPS_KERNELMESSAGE', IPS_BASE + 100);           //Kernel Message
     define('KR_CREATE', IPS_KERNELMESSAGE + 1);            //Kernel is beeing created
@@ -26,7 +28,7 @@ if (!defined("IPS_KERNELMESSAGE")) {
     define('KR_UNINIT', IPS_KERNELMESSAGE + 4);            //Got Shutdown Message, unloading all stuff
     define('KR_SHUTDOWN', IPS_KERNELMESSAGE + 5);          //Uninit Complete, Destroying Kernel Inteface
 }
-if (!defined("IPS_LOGMESSAGE")) {
+if (!defined('IPS_LOGMESSAGE')) {
     // --- KERNEL LOGMESSAGE
     define('IPS_LOGMESSAGE', IPS_BASE + 200);              //Logmessage Message
     define('KL_MESSAGE', IPS_LOGMESSAGE + 1);              //Normal Message                      | FG: Black | BG: White  | STLYE : NONE
@@ -37,13 +39,13 @@ if (!defined("IPS_LOGMESSAGE")) {
     define('KL_DEBUG', IPS_LOGMESSAGE + 6);                //Debug Informations + Script Results | FG: Grey  | BG: White  | STLYE : NONE
     define('KL_CUSTOM', IPS_LOGMESSAGE + 7);               //User Message                        | FG: Black | BG: White  | STLYE : NONE
 }
-if (!defined("IPS_MODULEMESSAGE")) {
+if (!defined('IPS_MODULEMESSAGE')) {
     // --- MODULE LOADER
     define('IPS_MODULEMESSAGE', IPS_BASE + 300);           //ModuleLoader Message
     define('ML_LOAD', IPS_MODULEMESSAGE + 1);              //Module loaded
     define('ML_UNLOAD', IPS_MODULEMESSAGE + 2);            //Module unloaded
 }
-if (!defined("IPS_OBJECTMESSAGE")) {
+if (!defined('IPS_OBJECTMESSAGE')) {
     // --- OBJECT MANAGER
     define('IPS_OBJECTMESSAGE', IPS_BASE + 400);
     define('OM_REGISTER', IPS_OBJECTMESSAGE + 1);          //Object was registered
@@ -61,7 +63,7 @@ if (!defined("IPS_OBJECTMESSAGE")) {
     define('OM_CHILDREMOVED', IPS_OBJECTMESSAGE + 13);     //Child for Object was removed
     define('OM_CHANGEIDENT', IPS_OBJECTMESSAGE + 14);      //Ident was Changed
 }
-if (!defined("IPS_INSTANCEMESSAGE")) {
+if (!defined('IPS_INSTANCEMESSAGE')) {
     // --- INSTANCE MANAGER
     define('IPS_INSTANCEMESSAGE', IPS_BASE + 500);         //Instance Manager Message
     define('IM_CREATE', IPS_INSTANCEMESSAGE + 1);          //Instance created
@@ -75,7 +77,7 @@ if (!defined("IPS_INSTANCEMESSAGE")) {
     define('IM_SEARCHPROGRESS', IPS_INSTANCEMESSAGE + 9);  //Searching progress in %
     define('IM_SEARCHCOMPLETE', IPS_INSTANCEMESSAGE + 10); //Searching is complete
 }
-if (!defined("IPS_VARIABLEMESSAGE")) {
+if (!defined('IPS_VARIABLEMESSAGE')) {
     // --- VARIABLE MANAGER
     define('IPS_VARIABLEMESSAGE', IPS_BASE + 600);              //Variable Manager Message
     define('VM_CREATE', IPS_VARIABLEMESSAGE + 1);               //Variable Created
@@ -84,7 +86,7 @@ if (!defined("IPS_VARIABLEMESSAGE")) {
     define('VM_CHANGEPROFILENAME', IPS_VARIABLEMESSAGE + 4);    //On Profile Name Change
     define('VM_CHANGEPROFILEACTION', IPS_VARIABLEMESSAGE + 5);  //On Profile Action Change
 }
-if (!defined("IPS_SCRIPTMESSAGE")) {
+if (!defined('IPS_SCRIPTMESSAGE')) {
     // --- SCRIPT MANAGER
     define('IPS_SCRIPTMESSAGE', IPS_BASE + 700);           //Script Manager Message
     define('SM_CREATE', IPS_SCRIPTMESSAGE + 1);            //On Script Create
@@ -92,7 +94,7 @@ if (!defined("IPS_SCRIPTMESSAGE")) {
     define('SM_CHANGEFILE', IPS_SCRIPTMESSAGE + 3);        //On Script File changed
     define('SM_BROKEN', IPS_SCRIPTMESSAGE + 4);            //Script Broken Status changed
 }
-if (!defined("IPS_EVENTMESSAGE")) {
+if (!defined('IPS_EVENTMESSAGE')) {
     // --- EVENT MANAGER
     define('IPS_EVENTMESSAGE', IPS_BASE + 800);             //Event Scripter Message
     define('EM_CREATE', IPS_EVENTMESSAGE + 1);             //On Event Create
@@ -110,7 +112,7 @@ if (!defined("IPS_EVENTMESSAGE")) {
     define('EM_CHANGECYCLICTIMEFROM', IPS_EVENTMESSAGE + 13);
     define('EM_CHANGECYCLICTIMETO', IPS_EVENTMESSAGE + 14);
 }
-if (!defined("IPS_MEDIAMESSAGE")) {
+if (!defined('IPS_MEDIAMESSAGE')) {
     // --- MEDIA MANAGER
     define('IPS_MEDIAMESSAGE', IPS_BASE + 900);           //Media Manager Message
     define('MM_CREATE', IPS_MEDIAMESSAGE + 1);             //On Media Create
@@ -119,27 +121,27 @@ if (!defined("IPS_MEDIAMESSAGE")) {
     define('MM_AVAILABLE', IPS_MEDIAMESSAGE + 4);          //Media Available Status changed
     define('MM_UPDATE', IPS_MEDIAMESSAGE + 5);
 }
-if (!defined("IPS_LINKMESSAGE")) {
+if (!defined('IPS_LINKMESSAGE')) {
     // --- LINK MANAGER
     define('IPS_LINKMESSAGE', IPS_BASE + 1000);           //Link Manager Message
     define('LM_CREATE', IPS_LINKMESSAGE + 1);             //On Link Create
     define('LM_DELETE', IPS_LINKMESSAGE + 2);             //On Link Delete
     define('LM_CHANGETARGET', IPS_LINKMESSAGE + 3);       //On Link TargetID change
 }
-if (!defined("IPS_FLOWMESSAGE")) {
+if (!defined('IPS_FLOWMESSAGE')) {
     // --- DATA HANDLER
     define('IPS_FLOWMESSAGE', IPS_BASE + 1100);             //Data Handler Message
     define('FM_CONNECT', IPS_FLOWMESSAGE + 1);             //On Instance Connect
     define('FM_DISCONNECT', IPS_FLOWMESSAGE + 2);          //On Instance Disconnect
 }
-if (!defined("IPS_ENGINEMESSAGE")) {
+if (!defined('IPS_ENGINEMESSAGE')) {
     // --- SCRIPT ENGINE
     define('IPS_ENGINEMESSAGE', IPS_BASE + 1200);           //Script Engine Message
     define('SE_UPDATE', IPS_ENGINEMESSAGE + 1);             //On Library Refresh
     define('SE_EXECUTE', IPS_ENGINEMESSAGE + 2);            //On Script Finished execution
     define('SE_RUNNING', IPS_ENGINEMESSAGE + 3);            //On Script Started execution
 }
-if (!defined("IPS_PROFILEMESSAGE")) {
+if (!defined('IPS_PROFILEMESSAGE')) {
     // --- PROFILE POOL
     define('IPS_PROFILEMESSAGE', IPS_BASE + 1300);
     define('PM_CREATE', IPS_PROFILEMESSAGE + 1);
@@ -152,7 +154,7 @@ if (!defined("IPS_PROFILEMESSAGE")) {
     define('PM_ASSOCIATIONREMOVED', IPS_PROFILEMESSAGE + 8);
     define('PM_ASSOCIATIONCHANGED', IPS_PROFILEMESSAGE + 9);
 }
-if (!defined("IPS_TIMERMESSAGE")) {
+if (!defined('IPS_TIMERMESSAGE')) {
     // --- TIMER POOL
     define('IPS_TIMERMESSAGE', IPS_BASE + 1400);            //Timer Pool Message
     define('TM_REGISTER', IPS_TIMERMESSAGE + 1);
@@ -162,8 +164,8 @@ if (!defined("IPS_TIMERMESSAGE")) {
     define('TM_RUNNING', IPS_TIMERMESSAGE + 5);
 }
 
-if (!defined("IS_ACTIVE")) { //Nur wenn Konstanten noch nicht bekannt sind.
-// --- STATUS CODES
+if (!defined('IS_ACTIVE')) { //Nur wenn Konstanten noch nicht bekannt sind.
+    // --- STATUS CODES
     define('IS_SBASE', 100);
     define('IS_CREATING', IS_SBASE + 1); //module is being created
     define('IS_ACTIVE', IS_SBASE + 2); //module created and running
@@ -174,7 +176,7 @@ if (!defined("IS_ACTIVE")) { //Nur wenn Konstanten noch nicht bekannt sind.
     define('IS_NOTCREATED', IS_EBASE + 1); //instance could not be created
 }
 
-if (!defined("vtBoolean")) { //Nur wenn Konstanten noch nicht bekannt sind.
+if (!defined('vtBoolean')) { //Nur wenn Konstanten noch nicht bekannt sind.
     define('vtBoolean', 0);
     define('vtInteger', 1);
     define('vtFloat', 2);
@@ -195,30 +197,27 @@ trait VariableHelper
             SetValue($this->GetIDForIdent($Ident), $Value);
         }
     }
-
 }
 
 trait VariableProfile
 {
     /**
-     * Erstell und konfiguriert ein VariablenProfil für den Typ integer
+     * Erstell und konfiguriert ein VariablenProfil für den Typ integer.
      *
-     * @access protected
-     * @param string $Name Name des Profils.
-     * @param string $Icon Name des Icon.
-     * @param string $Prefix Prefix für die Darstellung.
-     * @param string $Suffix Suffix für die Darstellung.
-     * @param integer $MinValue Minimaler Wert.
-     * @param integer $MaxValue Maximaler wert.
-     * @param integer $StepSize Schrittweite
+     * @param string $Name     Name des Profils.
+     * @param string $Icon     Name des Icon.
+     * @param string $Prefix   Prefix für die Darstellung.
+     * @param string $Suffix   Suffix für die Darstellung.
+     * @param int    $MinValue Minimaler Wert.
+     * @param int    $MaxValue Maximaler wert.
+     * @param int    $StepSize Schrittweite
      */
     protected function RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize)
     {
-
         if (IPS_VariableProfileExists($Name)) {
             $profile = IPS_GetVariableProfile($Name);
             if ($profile['ProfileType'] != 1) {
-                throw new Exception("Variable profile type does not match for profile " . $Name, E_USER_WARNING);
+                throw new Exception('Variable profile type does not match for profile ' . $Name, E_USER_WARNING);
             }
             return true;
         }
@@ -230,23 +229,22 @@ trait VariableProfile
     }
 
     /**
-     * Erstell und konfiguriert ein VariablenProfil für den Typ integer mit Assoziationen
+     * Erstell und konfiguriert ein VariablenProfil für den Typ integer mit Assoziationen.
      *
-     * @access protected
-     * @param string $Name Name des Profils.
-     * @param string $Icon Name des Icon.
-     * @param string $Prefix Prefix für die Darstellung.
-     * @param string $Suffix Suffix für die Darstellung.
-     * @param array $Associations Assoziationen der Werte als Array.
+     * @param string $Name         Name des Profils.
+     * @param string $Icon         Name des Icon.
+     * @param string $Prefix       Prefix für die Darstellung.
+     * @param string $Suffix       Suffix für die Darstellung.
+     * @param array  $Associations Assoziationen der Werte als Array.
      */
     protected function RegisterProfileIntegerEx($Name, $Icon, $Prefix, $Suffix, $Associations)
     {
-        if (sizeof($Associations) === 0) {
+        if (count($Associations) === 0) {
             $MinValue = 0;
             $MaxValue = 0;
         } else {
             $MinValue = $Associations[0][0];
-            $MaxValue = $Associations[sizeof($Associations) - 1][0];
+            $MaxValue = $Associations[count($Associations) - 1][0];
         }
 
         if ($this->RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, 0) === true) {
@@ -255,32 +253,30 @@ trait VariableProfile
             }
         }
     }
-
 }
 
 /**
  * DebugHelper ergänzt SendDebug um die Möglichkeit Array und Objekte auszugeben.
- *
  */
 trait DebugHelper
 {
     /**
      * Ergänzt SendDebug um Möglichkeit Objekte und Array auszugeben.
      *
-     * @access protected
      * @param string $Message Nachricht für Data.
-     * @param mixed $Data Daten für die Ausgabe.
+     * @param mixed  $Data    Daten für die Ausgabe.
+     *
      * @return int $Format Ausgabeformat für Strings.
      */
     protected function SendDebug($Message, $Data, $Format)
     {
         if (is_object($Data)) {
             foreach ($Data as $Key => $DebugData) {
-                $this->SendDebug($Message . ":" . $Key, $DebugData, 1);
+                $this->SendDebug($Message . ':' . $Key, $DebugData, 1);
             }
         } elseif (is_array($Data)) {
             foreach ($Data as $Key => $DebugData) {
-                $this->SendDebug($Message . ":" . $Key, $DebugData, 0);
+                $this->SendDebug($Message . ':' . $Key, $DebugData, 0);
             }
         } elseif (is_bool($Data)) {
             parent::SendDebug($Message, ($Data ? 'TRUE' : 'FALSE'), 0);
@@ -288,7 +284,6 @@ trait DebugHelper
             parent::SendDebug($Message, $Data, $Format);
         }
     }
-
 }
 
-/** @} */
+/* @} */
