@@ -12,11 +12,10 @@ IPS-Modul für die Visualisierung des PHP OpCache
 1. [Funktionsumfang](#1-funktionsumfang)
 2. [Voraussetzungen](#2-voraussetzungen)
 3. [Software-Installation](#3-software-installation)
-4. [Enthaltene Module](#4-enthaltene-module)
-5. [GUID der Module](#5-guid-der-module)
-6. [Changlog](#6-changlog)
-7. [Spenden](#7-spenden)
-8. [Lizenz](#8-lizenz)
+4. [GUID der Module](#4-guid-der-module)
+5. [Changlog](#5-changlog)
+6. [Spenden](#6-spenden)
+7. [Lizenz](#7-lizenz)
 
 ## 1. Funktionsumfang
 
@@ -41,28 +40,25 @@ IPS-Modul für die Visualisierung des PHP OpCache
 
    **Bei kommerzieller Nutzung (z.B. als Errichter oder Integrator) wenden Sie sich bitte an den Autor.**  
 
-## 4. Enthaltene Module
-
-
-##  5. GUID der Module
+##  4. GUID der Module
 
 | Modul           | Typ    | GUID                                   |
 | :-------------: | :----: | :------------------------------------: |
 | OpCacheInfoSite | Core   | {08F40577-65FA-4F52-8C04-1F4AFCBB1723} |
 | OpCacheModule   | Device | {CA613F46-25AE-4670-9DE3-5F671A0FE0CB} |
 
-## 6. Changlog
+## 5. Changlog
 
    Version 1.0 :  
      - Erstes Release  
 
-## 7. Spenden  
+## 6. Spenden  
   
   Die Library ist für die nicht kommzerielle Nutzung kostenlos, Schenkungen als Unterstützung für den Autor werden hier akzeptiert:  
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=G2SLW2MEMQZH2" target="_blank"><img src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donate_LG.gif" border="0" /></a>
 
 
-## 8. Lizenz
+## 7. Lizenz
 
   [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)  
