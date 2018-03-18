@@ -11,8 +11,8 @@
  * @license       https://creativecommons.org/licenses/by-nc-sa/4.0/ CC BY-NC-SA 4.0
  * @version       1.00
  */
-require_once(__DIR__ . "/libs/OpCacheTraits.php");  // diverse Klassen
-require_once(__DIR__ . "/libs/OpCacheTraits.php");  // diverse Klassen
+require_once(__DIR__ . "/../libs/OpCacheTraits.php");  // diverse Klassen
+
 
 /**
  * OpCacheModule ist die Klasse für die Darstellung von Infomationen des PHP OpCache in IPS.

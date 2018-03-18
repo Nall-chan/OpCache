@@ -1,5 +1,25 @@
 {
     "elements":
-            [
-            ]
+            [{
+                    "type": "Label",
+                    "label": "Display-Module"
+                },
+                {
+                    "name": "SubmodulePath",
+                    "type": "Select",
+                    "caption": "Used",
+                    "options": [
+                        {
+                            "label": "Opcache-GUI",
+                            "value": "opcache-gui/index.php"
+                        },
+                        {
+                            "label": "Opcache-Status",
+                            "value": "opcache-status/opcache.php"
+                        }
+                    ]
+                }
+            ],
+    "actions":
+            []
 }
