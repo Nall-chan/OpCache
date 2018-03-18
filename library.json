@@ -1,0 +1,13 @@
+{
+    "id": "{0157C55A-F0A6-4DD7-AC92-494DA91FD05A}",
+    "author": "Michael Tr\u00f6ger",
+    "name": "OpCache Library",
+    "url": "https://github.com/Nall-chan/IPSOpCache",
+    "version": "1.00",
+    "build": 100,
+    "date": 1521364531,
+    "compatibility": {
+        "version": "5.0",
+        "date": 1521364531
+    }
+}

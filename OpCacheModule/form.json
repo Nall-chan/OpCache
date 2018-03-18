@@ -1,0 +1,22 @@
+{
+    "elements":
+            [
+                {
+                    "type": "Label",
+                    "label": "Refresh interval"
+                },
+                {
+                    "name": "Interval",
+                    "type": "IntervalBox",
+                    "caption": "seconds"
+                }
+            ],
+    "actions":
+            [
+                {
+                    "type": "Button",
+                    "label": "Update",
+                    "onClick": "OPCACHE_Update($id);"
+                }
+            ]
+}
