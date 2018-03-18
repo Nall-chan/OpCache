@@ -86,7 +86,7 @@ class OpCacheInfoSite extends IPSModule
 
         if ($Url != "") {
             $Button = array(
-                'onClick' => $Url,
+                'onClick' => 'echo "' . $Url . '"',
                 'label'   => "Open Webhook",
                 'type'    => "Button");
         } else {
