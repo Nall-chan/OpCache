@@ -39,9 +39,6 @@ Bereitstellung der Stati des OpCache von PHP als Website.
 
    **Bei kommerzieller Nutzung (z.B. als Errichter oder Integrator) wenden Sie sich bitte an den Autor.**  
 
-**Hinweis:**
-  Eine eventuell vorhandene Firewall auf dem Host-System des IPS-Servers, muss so konfiguriert werden dass der Port 4196 TCP ankommend freigegeben ist.  
-
 ## 4. Einrichten der Instanzen in IP-Symcon
 
 Das Modul ist im Dialog 'Instanz hinzufügen' unter dem Hersteller 'Nall-chan' oder dem Schnellfilter 'OpCache' zufinden.  
