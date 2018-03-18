@@ -1,34 +1,32 @@
 <?php
 
+declare(strict_types=1);
 /**
  * @addtogroup opcache
  * @{
  *
- * @package       OPCACHE
  * @file          module.php
+ *
  * @author        Michael Tröger <micha@nall-chan.net>
  * @copyright     2018 Michael Tröger
  * @license       https://creativecommons.org/licenses/by-nc-sa/4.0/ CC BY-NC-SA 4.0
+ *
  * @version       1.00
  */
-require_once(__DIR__ . "/../libs/OpCacheTraits.php");  // diverse Klassen
-
+require_once __DIR__ . '/../libs/OpCacheTraits.php';  // diverse Klassen
 
 /**
  * OpCacheModule ist die Klasse für die Darstellung von Infomationen des PHP OpCache in IPS.
- * Erweitert ipsmodule
- *
+ * Erweitert ipsmodule.
  */
 class OpCacheModule extends IPSModule
 {
-
     use VariableHelper,
         DebugHelper,
         VariableProfile;
+
     /**
      * Interne Funktion des SDK.
-     *
-     * @access public
      */
     public function Create()
     {
@@ -39,8 +37,6 @@ class OpCacheModule extends IPSModule
 
     /**
      * Interne Funktion des SDK.
-     *
-     * @access public
      */
     public function Destroy()
     {
@@ -49,8 +45,6 @@ class OpCacheModule extends IPSModule
 
     /**
      * Interne Funktion des SDK.
-     *
-     * @access public
      */
     public function ApplyChanges()
     {
@@ -112,10 +106,9 @@ class OpCacheModule extends IPSModule
     /**
      * Nachrichten aus der Nachrichtenschlange verarbeiten.
      *
-     * @access public
-     * @param int $TimeStamp
-     * @param int $SenderID
-     * @param int $Message
+     * @param int       $TimeStamp
+     * @param int       $SenderID
+     * @param int       $Message
      * @param array|int $Data
      */
     public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
@@ -130,18 +123,17 @@ class OpCacheModule extends IPSModule
         }
     }
 
-    ################## PUBLIC
+    //################# PUBLIC
+
     /**
      * IPS-Instanz Funktion OPCACHE_Update.
      *
-     * @access public
      * @return bool True wenn Befehl erfolgreich ausgeführt wurde, sonst false.
      */
     public function Update()
     {
         return false;
     }
-
 }
 
-/** @} */
+/* @} */
