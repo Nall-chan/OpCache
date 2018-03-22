@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 /**
  * @addtogroup opcache
  * @{
@@ -21,7 +21,6 @@ require_once __DIR__ . '/../libs/OpCacheTraits.php';  // diverse Klassen
  */
 class OpCacheModule extends IPSModule
 {
-
     use VariableHelper,
         DebugHelper,
         VariableProfile;
@@ -128,7 +127,6 @@ class OpCacheModule extends IPSModule
         $isLoaded = extension_loaded('Zend OPcache');
         $Form = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
         if (!$isEnabled) {
-
             $Warning = [
                 'type'  => 'Label',
                 'label' => 'OPCache Support is not enabled in IPS!'
@@ -145,7 +143,6 @@ class OpCacheModule extends IPSModule
             return json_encode($Form);
         }
         if (!$isLoaded) {
-
             $Warning = [
                 'type'  => 'Label',
                 'label' => 'OPCache Support is not loaded in IPS!'
@@ -162,6 +159,7 @@ class OpCacheModule extends IPSModule
     }
 
     //################# PUBLIC
+
     /**
      * IPS-Instanz Funktion OPCACHE_Update.
      *
@@ -198,7 +196,6 @@ class OpCacheModule extends IPSModule
         }
         return true;
     }
-
 }
 
 /* @} */
