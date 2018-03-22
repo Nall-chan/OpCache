@@ -19,7 +19,15 @@
             "total_memory": "Speicher gesamt",
             "used_memory": "Speicher benutzt",
             "used_memory_percentage": "Speicher benutzt",
-            "wasted_memory": "Speicher verschwendet"
+            "wasted_memory": "Speicher verschwendet",
+            "Zend OPCache is not loaded.": "Zend OPCache ist nicht geladen.",
+            "OPCache Support is not loaded in IPS!": "OPCache Unterstützung ist nicht geladen!",
+            "Restart IPS to enable OPCache!": "IPS Neustarten um OPCache zu aktivieren!",
+            "Enable OPCache": "Aktiviere OPCache",
+            "OPCache Support is not enabled in IPS!": "OPCache Support ist in IPS nicht aktiviert!",
+            "Please restart IPS to activate OPCache!": "Bitte IPS neustarten um den OPCache zu aktivieren!",
+            "This Version of IPS not support OPCache.": "Diese Version von IPS unterstützt keinen OPCache.",
+            "Zend OPCache is active.":"Zend OPCache ist aktiv."
         }
     }
 }

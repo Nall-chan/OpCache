@@ -18,5 +18,18 @@
                     "label": "Update",
                     "onClick": "OPCACHE_Update($id);"
                 }
-            ]
+            ],
+    "status":
+            [
+                {
+                    "code": 102,
+                    "icon": "active",
+                    "caption": "Zend OPCache is active."
+                },
+                {
+                    "code": 201,
+                    "icon": "error",
+                    "caption": "Zend OPCache is not loaded."
+                }
+            ]            
 }

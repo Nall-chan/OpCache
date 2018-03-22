@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 /**
  * @addtogroup opcache
  * @{
@@ -21,6 +21,7 @@ require_once __DIR__ . '/../libs/OpCacheTraits.php';  // diverse Klassen
  */
 class OpCacheModule extends IPSModule
 {
+
     use VariableHelper,
         DebugHelper,
         VariableProfile;
@@ -85,21 +86,21 @@ class OpCacheModule extends IPSModule
         parent::ApplyChanges();
 
         if (IPS_GetKernelRunlevel() == KR_READY) {
-            $this->Update();
             $this->SetInterval($this->ReadPropertyInteger('Interval'));
         } else {
             $this->SetInterval(0);
+        }
+        if (extension_loaded('Zend OPcache')) {
+            $this->SetStatus(IS_ACTIVE);
+            $this->Update();
+        } else {
+            $this->SetStatus(IS_EBASE + 1);
         }
     }
 
     private function SetInterval(int $Seconds)
     {
-        $isLoaded = extension_loaded('Zend OPcache');
-        if ($isLoaded) {
-            $msec = $Seconds < 5 ? 0 : $Seconds * 1000;
-        } else {
-            $msec = 0;
-        }
+        $msec = $Seconds < 5 ? 0 : $Seconds * 1000;
         $this->SetTimerInterval('Update', $msec);
     }
 
@@ -121,8 +122,46 @@ class OpCacheModule extends IPSModule
         }
     }
 
-    //################# PUBLIC
+    public function GetConfigurationForm()
+    {
+        $isEnabled = @IPS_GetOption('OPcacheSupport');
+        $isLoaded = extension_loaded('Zend OPcache');
+        $Form = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
+        if (!$isEnabled) {
 
+            $Warning = [
+                'type'  => 'Label',
+                'label' => 'OPCache Support is not enabled in IPS!'
+            ];
+            $Button = [
+                'label'   => 'Enable OPCache',
+                'type'    => 'Button',
+                'onClick' => '$result = @IPS_SetOption("OPcacheSupport",1);'
+                . 'if ($result) echo "' . $this->Translate('Please restart IPS to activate OPCache!') . '";'
+                . 'else echo "' . $this->Translate('This Version of IPS not support OPCache.') . '"'
+            ];
+            $Form['actions'][0] = $Warning;
+            $Form['actions'][1] = $Button;
+            return json_encode($Form);
+        }
+        if (!$isLoaded) {
+
+            $Warning = [
+                'type'  => 'Label',
+                'label' => 'OPCache Support is not loaded in IPS!'
+            ];
+            $Warning2 = [
+                'type'  => 'Label',
+                'label' => 'Restart IPS to enable OPCache!'
+            ];
+            $Form['actions'][0] = $Warning;
+            $Form['actions'][1] = $Warning2;
+            return json_encode($Form);
+        }
+        return json_encode($Form);
+    }
+
+    //################# PUBLIC
     /**
      * IPS-Instanz Funktion OPCACHE_Update.
      *
@@ -131,9 +170,11 @@ class OpCacheModule extends IPSModule
     public function Update()
     {
         if (!extension_loaded('Zend OPcache')) {
-            trigger_error('Zend OPcache ist not loaded', E_USER_NOTICE);
+            echo $this->Translate('Zend OPCache ist not loaded.');
+            $this->SetStatus(IS_EBASE + 1);
             return false;
         }
+        $this->SetStatus(IS_ACTIVE);
         $status = opcache_get_status(false);
         $config = opcache_get_configuration();
         $overview = array_merge(
@@ -157,6 +198,7 @@ class OpCacheModule extends IPSModule
         }
         return true;
     }
+
 }
 
 /* @} */
