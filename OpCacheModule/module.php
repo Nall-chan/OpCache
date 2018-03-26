@@ -174,7 +174,7 @@ class OpCacheModule extends IPSModule
         }
         $this->SetStatus(IS_ACTIVE);
         $status = @opcache_get_status(false);
-        if (!is_array($status){
+        if (!is_array($status)){
             echo $this->Translate('Status from Zend OPCache is not avaiable.');
             return false;
         }
