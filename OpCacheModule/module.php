@@ -173,7 +173,11 @@ class OpCacheModule extends IPSModule
             return false;
         }
         $this->SetStatus(IS_ACTIVE);
-        $status = opcache_get_status(false);
+        $status = @opcache_get_status(false);
+        if (!is_array($status){
+            echo $this->Translate('Status from Zend OPCache is not avaiable.');
+            return false;
+        }
         $config = opcache_get_configuration();
         $overview = array_merge(
                 $status['memory_usage'], $status['opcache_statistics'], [
