@@ -27,7 +27,8 @@
             "OPCache Support is not enabled in IPS!": "OPCache Support ist in IPS nicht aktiviert!",
             "Please restart IPS to activate OPCache!": "Bitte IPS neustarten um den OPCache zu aktivieren!",
             "This Version of IPS not support OPCache.": "Diese Version von IPS unterstützt keinen OPCache.",
-            "Zend OPCache is active.":"Zend OPCache ist aktiv."
+            "Zend OPCache is active.":"Zend OPCache ist aktiv.",
+            "Status from Zend OPCache is not avaiable.": "Status vom Zend OPCache ist nicht verfügbar."
         }
     }
 }
