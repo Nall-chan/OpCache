@@ -21,7 +21,6 @@ require_once __DIR__ . '/../libs/OpCacheTraits.php';  // diverse Klassen
  */
 class OpCacheModule extends IPSModule
 {
-
     use \OpCacheModule\DebugHelper,
         \OpCacheModule\VariableProfileHelper;
     public static $VariableTyp = [
@@ -159,6 +158,7 @@ class OpCacheModule extends IPSModule
     }
 
     //################# PUBLIC
+
     /**
      * IPS-Instanz Funktion OPCACHE_Update.
      *
@@ -216,7 +216,6 @@ class OpCacheModule extends IPSModule
             SetValue($this->GetIDForIdent($Ident), $Value);
         }
     }
-
 }
 
 /* @} */
