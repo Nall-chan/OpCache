@@ -8,10 +8,10 @@ declare(strict_types=1);
  * @file          module.php
  *
  * @author        Michael Tröger <micha@nall-chan.net>
- * @copyright     2018 Michael Tröger
+ * @copyright     2019 Michael Tröger
  * @license       https://creativecommons.org/licenses/by-nc-sa/4.0/ CC BY-NC-SA 4.0
  *
- * @version       1.00
+ * @version       2.00
  */
 require_once __DIR__ . '/../libs/OpCacheTraits.php';  // diverse Klassen
 
@@ -21,9 +21,9 @@ require_once __DIR__ . '/../libs/OpCacheTraits.php';  // diverse Klassen
  */
 class OpCacheModule extends IPSModule
 {
-    use VariableHelper,
-        DebugHelper,
-        VariableProfile;
+
+    use \OpCacheModule\DebugHelper,
+        \OpCacheModule\VariableProfileHelper;
     public static $VariableTyp = [
         'used_memory'               => 2,
         'free_memory'               => 2,
@@ -159,7 +159,6 @@ class OpCacheModule extends IPSModule
     }
 
     //################# PUBLIC
-
     /**
      * IPS-Instanz Funktion OPCACHE_Update.
      *
@@ -200,6 +199,24 @@ class OpCacheModule extends IPSModule
         }
         return true;
     }
+
+    protected function SetValue($Ident, $Value)
+    {
+        $IpsVarType = self::$VariableTyp[$Ident];
+        if (array_key_exists($Ident, self::$VariableProfile)) {
+            $Profile = self::$VariableProfile[$Ident];
+        } else {
+            $Profile = '';
+        }
+        $this->MaintainVariable($Ident, $this->Translate($Ident), $IpsVarType, $Profile, 0, true);
+
+        if (method_exists('IPSModule', 'SetValue')) {
+            parent::SetValue($Ident, $Value);
+        } else {
+            SetValue($this->GetIDForIdent($Ident), $Value);
+        }
+    }
+
 }
 
 /* @} */

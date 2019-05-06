@@ -8,10 +8,10 @@ declare(strict_types=1);
  * @file          module.php
  *
  * @author        Michael Tröger <micha@nall-chan.net>
- * @copyright     2018 Michael Tröger
+ * @copyright     2019 Michael Tröger
  * @license       https://creativecommons.org/licenses/by-nc-sa/4.0/ CC BY-NC-SA 4.0
  *
- * @version       1.00
+ * @version       2.00
  */
 require_once __DIR__ . '/../libs/OpCacheTraits.php';  // diverse Klassen
 
@@ -21,9 +21,10 @@ require_once __DIR__ . '/../libs/OpCacheTraits.php';  // diverse Klassen
  */
 class OpCacheInfoSite extends IPSModule
 {
-    use VariableHelper,
-        DebugHelper;
 
+    use \OpCacheModule\WebhookHelper,
+        \OpCacheModule\VariableProfileHelper,
+        \OpCacheModule\DebugHelper;
     /**
      * Interne Funktion des SDK.
      */
@@ -38,6 +39,9 @@ class OpCacheInfoSite extends IPSModule
      */
     public function Destroy()
     {
+        if (!IPS_InstanceExists($this->InstanceID)) {
+            $this->UnregisterHook('/hook/Opcache' . $this->InstanceID);
+        }
         parent::Destroy();
     }
 
@@ -51,14 +55,13 @@ class OpCacheInfoSite extends IPSModule
         parent::ApplyChanges();
 
         if (IPS_GetKernelRunlevel() == KR_READY) {
-            $this->RegisterHook('/hook/Opcache');
+            $this->RegisterHook('/hook/Opcache' . $this->InstanceID);
         }
     }
 
     public function GetConfigurationForm()
     {
         $isEnabled = @IPS_GetOption('OPcacheSupport');
-        $Url = $this->GetURL();
         $Form = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
 
         if (!$isEnabled) {
@@ -77,54 +80,13 @@ class OpCacheInfoSite extends IPSModule
             $Form['actions'][] = $Button;
         }
 
-        if ($Url != '') {
-            $Button = [
-                'onClick' => 'echo "' . $Url . '";',
-                'label'   => 'Open Webhook',
-                'type'    => 'Button'];
-        } else {
-            $Button = [
-                'type'  => 'Label',
-                'label' => 'Webhook: <IP>:<PORT>/hook/Opcache'
-            ];
-        }
+        $Button = [
+            'onClick' => 'echo "/hook/Opcache' . $this->InstanceID . '";',
+            'label'   => 'Open Webhook',
+            'type'    => 'Button',
+            'link'    => true];
         $Form['actions'][] = $Button;
         return json_encode($Form);
-    }
-
-    protected function GetURL()
-    {
-        $ids = IPS_GetInstanceListByModuleID('{9486D575-BE8C-4ED8-B5B5-20930E26DE6F}');
-        if (count($ids) > 0) {
-            if (IPS_GetInstance($ids[0])['InstanceStatus'] == 102) {
-                return CC_GetURL($ids[0]) . '/hook/Opcache';
-            }
-        }
-        return '';
-    }
-
-    protected function RegisterHook($WebHook)
-    {
-        $ids = IPS_GetInstanceListByModuleID('{015A6EB8-D6E5-4B93-B496-0D3F77AE9FE1}');
-        if (count($ids) > 0) {
-            $hooks = json_decode(IPS_GetProperty($ids[0], 'Hooks'), true);
-            $found = false;
-            foreach ($hooks as $index => $hook) {
-                if ($hook['Hook'] == $WebHook) {
-                    if ($hook['TargetID'] == $this->InstanceID) {
-                        return;
-                    }
-                    $hooks[$index]['TargetID'] = $this->InstanceID;
-                    $found = true;
-                }
-            }
-            if (!$found) {
-                $hooks[] = ['Hook' => $WebHook, 'TargetID' => $this->InstanceID];
-            }
-            $this->SendDebug('hook', $hooks, 0);
-            IPS_SetProperty($ids[0], 'Hooks', json_encode($hooks));
-            IPS_ApplyChanges($ids[0]);
-        }
     }
 
     protected function ProcessHookdata()
@@ -132,6 +94,7 @@ class OpCacheInfoSite extends IPSModule
         $path = $this->ReadPropertyString('SubmodulePath');
         include __DIR__ . '/../libs/' . $path;
     }
+
 }
 
 /* @} */
