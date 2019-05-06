@@ -21,10 +21,10 @@ require_once __DIR__ . '/../libs/OpCacheTraits.php';  // diverse Klassen
  */
 class OpCacheInfoSite extends IPSModule
 {
-
     use \OpCacheModule\WebhookHelper,
         \OpCacheModule\VariableProfileHelper,
         \OpCacheModule\DebugHelper;
+
     /**
      * Interne Funktion des SDK.
      */
@@ -94,7 +94,6 @@ class OpCacheInfoSite extends IPSModule
         $path = $this->ReadPropertyString('SubmodulePath');
         include __DIR__ . '/../libs/' . $path;
     }
-
 }
 
 /* @} */
