@@ -50,8 +50,6 @@ class OpCacheInfoSite extends IPSModule
      */
     public function ApplyChanges()
     {
-        $this->RegisterMessage(0, IPS_KERNELSTARTED);
-
         parent::ApplyChanges();
 
         if (IPS_GetKernelRunlevel() == KR_READY) {
