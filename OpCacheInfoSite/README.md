@@ -1,29 +1,31 @@
 [![SDK](https://img.shields.io/badge/Symcon-PHPModul-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
-[![Version](https://img.shields.io/badge/Modul%20Version-2.0-blue.svg)]()
-[![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)  
-[![Version](https://img.shields.io/badge/Symcon%20Version-5.1%20%3E-green.svg)](https://www.symcon.de/forum/threads/30857-IP-Symcon-5-1-%28Stable%29-Changelog)
-[![StyleCI](https://styleci.io/repos/125710396/shield?style=flat)](https://styleci.io/repos/125710396)  
+[![Version](https://img.shields.io/badge/Modul%20Version-2.0-blue.svg)]()[![Version](https://img.shields.io/badge/Symcon%20Version-5.1%20%3E-green.svg)](https://www.symcon.de/service/dokumentation/installation/migrationen/v50-v51-q2-2019/)  
+[![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![Check Style](https://github.com/Nall-chan/OpCache/workflows/Check%20Style/badge.svg)](https://github.com/Nall-chan/OpCache/actions) 
+[![Run Tests](https://github.com/Nall-chan/OpCache/workflows/Run%20Tests/badge.svg)](https://github.com/Nall-chan/OpCache/actions) 
 
 # OpCache Info-Website  
-Bereitstellung der Stati des OpCache von PHP als Website.  
+Bereitstellung des Status von dem OpCache der PHP Laufzeitumgebung als Website.  
 
-## Dokumentation
+## Dokumentation <!-- omit in toc -->
 
 **Inhaltsverzeichnis**
 
-1. [Funktionsumfang](#1-funktionsumfang)  
-2. [Voraussetzungen](#2-voraussetzungen)  
-3. [Software-Installation](#3-software-installation) 
-4. [Einrichten der Instanzen in IP-Symcon](#4-einrichten-der-instanzen-in-ip-symcon)
-5. [Statusvariablen und Profile](#5-statusvariablen-und-profile)
-6. [WebHook](#6-webhook)
-7. [PHP-Befehlsreferenz](#7-php-befehlsreferenz) 
-8. [Anhang](#8-anhang)  
-9. [Lizenz](#9-lizenz)
+- [1. Funktionsumfang](#1-funktionsumfang)
+- [2. Voraussetzungen](#2-voraussetzungen)
+- [3. Software-Installation](#3-software-installation)
+- [4. Einrichten der Instanzen in IP-Symcon](#4-einrichten-der-instanzen-in-ip-symcon)
+- [5. Statusvariablen und Profile](#5-statusvariablen-und-profile)
+- [6. WebHook](#6-webhook)
+- [7. PHP-Befehlsreferenz](#7-php-befehlsreferenz)
+- [8. Anhang](#8-anhang)
+  - [Externe Library's](#externe-librarys)
+  - [Changelog:](#changelog)
+- [9. Lizenz](#9-lizenz)
 
 ## 1. Funktionsumfang
 
- - Bereitstellung der Stati des Cache über externer Informations-Module als Webhook.  
+ - Bereitstellung des Status von dem OpCache über ein externes Informations-Module als Webhook.  
 
 ## 2. Voraussetzungen
 
@@ -31,16 +33,11 @@ Bereitstellung der Stati des OpCache von PHP als Website.
 
 ## 3. Software-Installation
 
- Dieses Modul ist Bestandteil der IPS OpCache Library.  
-
-**IPS 5.1:**  
-   Bei privater Nutzung:
-     Über den 'Module-Store' in IPS.  
-   **Bei kommerzieller Nutzung (z.B. als Errichter oder Integrator) wenden Sie sich bitte an den Autor.**  
+ Dieses Modul ist Bestandteil der [OpCache](../README.md#3-software-installation) Library.  
 
 ## 4. Einrichten der Instanzen in IP-Symcon
 
-Das Modul ist im Dialog 'Instanz hinzufügen' unter dem Hersteller 'Nall-chan' oder dem Schnellfilter 'OpCache' zufinden.  
+Das Modul ist im Dialog 'Instanz hinzufügen' unter dem Hersteller 'Nall-chan' oder dem Schnellfilter 'OpCache' zu finden.  
 ![Instanz hinzufügen](../imgs/addInstance.png)  
 
 In dem sich öffnenden Konfigurationsformular wird die externe Library ausgewählt, welche über den Webhook erreichbar ist.  
@@ -48,9 +45,9 @@ In dem sich öffnenden Konfigurationsformular wird die externe Library ausgewäh
 **Konfigurationsseite:**  
 ![Instanz hinzufügen](../imgs/settingSite.png)  
 
-| Eigenschaft   | Typ     | Standardwert               | Funktion                               |
-| :-----------: | :-----: | :------------------------: | :------------------------------------: |
-| SubmodulePath | string  | opcache-status/opcache.php | PHP-Script für die Ausgabe per Webhook |
+|  Eigenschaft  |  Typ   |        Standardwert        |                Funktion                |
+| :-----------: | :----: | :------------------------: | :------------------------------------: |
+| SubmodulePath | string | opcache-status/opcache.php | PHP-Script für die Ausgabe per Webhook |
 
 
 ## 5. Statusvariablen und Profile
@@ -69,7 +66,12 @@ Keine Befehle vorhanden.
 
 ## 8. Anhang
 
-**Changlog:**  
+### Externe Library's
+
+- [opcache-gui](https://github.com/amnuts/opcache-gui)
+- [OPcache Status](https://github.com/rlerdorf/opcache-status)
+
+### Changelog:  
 
 Version 2.0:  
  - Release für IPS 5.1 und den Module-Store   

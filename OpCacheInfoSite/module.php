@@ -8,22 +8,22 @@ declare(strict_types=1);
  * @file          module.php
  *
  * @author        Michael Tröger <micha@nall-chan.net>
- * @copyright     2019 Michael Tröger
+ * @copyright     2020 Michael Tröger
  * @license       https://creativecommons.org/licenses/by-nc-sa/4.0/ CC BY-NC-SA 4.0
  *
- * @version       2.00
+ * @version       2.01
  */
 require_once __DIR__ . '/../libs/OpCacheTraits.php';  // diverse Klassen
 
 /**
- * OpCacheModule ist die Klasse für die Darstellung von Infomationen des PHP OpCache in IPS.
+ * OpCacheModule ist die Klasse für die Darstellung von Informationen des PHP OpCache in IPS.
  * Erweitert ipsmodule.
  */
 class OpCacheInfoSite extends IPSModule
 {
-    use \OpCacheModule\WebhookHelper,
-        \OpCacheModule\VariableProfileHelper,
-        \OpCacheModule\DebugHelper;
+    use \OpCacheModule\WebhookHelper;
+    use \OpCacheModule\VariableProfileHelper;
+    use \OpCacheModule\DebugHelper;
 
     /**
      * Interne Funktion des SDK.

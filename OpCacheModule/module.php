@@ -8,21 +8,21 @@ declare(strict_types=1);
  * @file          module.php
  *
  * @author        Michael Tröger <micha@nall-chan.net>
- * @copyright     2019 Michael Tröger
+ * @copyright     2020 Michael Tröger
  * @license       https://creativecommons.org/licenses/by-nc-sa/4.0/ CC BY-NC-SA 4.0
  *
- * @version       2.00
+ * @version       2.01
  */
 require_once __DIR__ . '/../libs/OpCacheTraits.php';  // diverse Klassen
 
 /**
- * OpCacheModule ist die Klasse für die Darstellung von Infomationen des PHP OpCache in IPS.
+ * OpCacheModule ist die Klasse für die Darstellung von Informationen des PHP OpCache in IPS.
  * Erweitert ipsmodule.
  */
 class OpCacheModule extends IPSModule
 {
-    use \OpCacheModule\DebugHelper,
-        \OpCacheModule\VariableProfileHelper;
+    use \OpCacheModule\DebugHelper;
+    use \OpCacheModule\VariableProfileHelper;
     public static $VariableTyp = [
         'used_memory'               => 2,
         'free_memory'               => 2,
@@ -96,12 +96,6 @@ class OpCacheModule extends IPSModule
         }
     }
 
-    private function SetInterval(int $Seconds)
-    {
-        $msec = $Seconds < 5 ? 0 : $Seconds * 1000;
-        $this->SetTimerInterval('Update', $msec);
-    }
-
     /**
      * Nachrichten aus der Nachrichtenschlange verarbeiten.
      *
@@ -116,6 +110,7 @@ class OpCacheModule extends IPSModule
             case IPS_KERNELSTARTED:
                 $this->Update();
                 $this->SetInterval($this->ReadPropertyInteger('Interval'));
+                $this->UnregisterMessage(0, IPS_KERNELSTARTED);
                 break;
         }
     }
@@ -174,20 +169,20 @@ class OpCacheModule extends IPSModule
         $this->SetStatus(IS_ACTIVE);
         $status = @opcache_get_status(false);
         if (!is_array($status)) {
-            echo $this->Translate('Status from Zend OPCache is not avaiable.');
+            echo $this->Translate('Status from Zend OPCache is not available.');
             return false;
         }
         $config = opcache_get_configuration();
         $overview = array_merge(
                 $status['memory_usage'], $status['opcache_statistics'], [
-            'used_memory_percentage' => 100 * (
-            ($status['memory_usage']['used_memory'] + $status['memory_usage']['wasted_memory']) / $config['directives']['opcache.memory_consumption']),
-            'free_memory_percentage' => 100 * (
-            $status['memory_usage']['free_memory'] / $config['directives']['opcache.memory_consumption']),
-            'total_memory'           => (float) $config['directives']['opcache.memory_consumption'] / 1024 / 1024,
-            'used_memory'            => $status['memory_usage']['used_memory'] / 1024 / 1024,
-            'free_memory'            => $status['memory_usage']['free_memory'] / 1024 / 1024,
-            'wasted_memory'          => $status['memory_usage']['wasted_memory'] / 1024 / 1024,
+                    'used_memory_percentage' => 100 * (
+                    ($status['memory_usage']['used_memory'] + $status['memory_usage']['wasted_memory']) / $config['directives']['opcache.memory_consumption']),
+                    'free_memory_percentage' => 100 * (
+                    $status['memory_usage']['free_memory'] / $config['directives']['opcache.memory_consumption']),
+                    'total_memory'           => (float) $config['directives']['opcache.memory_consumption'] / 1024 / 1024,
+                    'used_memory'            => $status['memory_usage']['used_memory'] / 1024 / 1024,
+                    'free_memory'            => $status['memory_usage']['free_memory'] / 1024 / 1024,
+                    'wasted_memory'          => $status['memory_usage']['wasted_memory'] / 1024 / 1024,
                 ]
         );
         unset($overview['oom_restarts']);
@@ -209,12 +204,13 @@ class OpCacheModule extends IPSModule
             $Profile = '';
         }
         $this->MaintainVariable($Ident, $this->Translate($Ident), $IpsVarType, $Profile, 0, true);
+        parent::SetValue($Ident, $Value);
+    }
 
-        if (method_exists('IPSModule', 'SetValue')) {
-            parent::SetValue($Ident, $Value);
-        } else {
-            SetValue($this->GetIDForIdent($Ident), $Value);
-        }
+    private function SetInterval(int $Seconds)
+    {
+        $msec = $Seconds < 5 ? 0 : $Seconds * 1000;
+        $this->SetTimerInterval('Update', $msec);
     }
 }
 

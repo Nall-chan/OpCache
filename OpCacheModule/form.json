@@ -1,35 +1,32 @@
 {
-    "elements":
-            [
-                {
-                    "type": "Label",
-                    "label": "Refresh interval"
-                },
-                {
-                    "name": "Interval",
-                    "type": "IntervalBox",
-                    "caption": "seconds"
-                }
-            ],
-    "actions":
-            [
-                {
-                    "type": "Button",
-                    "label": "Update",
-                    "onClick": "OPCACHE_Update($id);"
-                }
-            ],
-    "status":
-            [
-                {
-                    "code": 102,
-                    "icon": "active",
-                    "caption": "Zend OPCache is active."
-                },
-                {
-                    "code": 201,
-                    "icon": "error",
-                    "caption": "Zend OPCache is not loaded."
-                }
-            ]            
+    "elements": [
+        {
+            "type": "Label",
+            "label": "Refresh interval"
+        },
+        {
+            "name": "Interval",
+            "type": "NumberSpinner",
+            "caption": "seconds"
+        }
+    ],
+    "actions": [
+        {
+            "type": "Button",
+            "label": "Update",
+            "onClick": "OPCACHE_Update($id);"
+        }
+    ],
+    "status": [
+        {
+            "code": 102,
+            "icon": "active",
+            "caption": "Zend OPCache is active."
+        },
+        {
+            "code": 201,
+            "icon": "error",
+            "caption": "Zend OPCache is not loaded."
+        }
+    ]
 }

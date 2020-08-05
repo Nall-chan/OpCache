@@ -1,25 +1,36 @@
 {
-    "elements":
-            [{
-                    "type": "Label",
-                    "label": "Display-Module"
+    "elements": [
+        {
+            "type": "Label",
+            "label": "Display-Module"
+        },
+        {
+            "name": "SubmodulePath",
+            "type": "Select",
+            "caption": "Used",
+            "options": [
+                {
+                    "label": "opcache-gui",
+                    "value": "opcache-gui/index.php"
                 },
                 {
-                    "name": "SubmodulePath",
-                    "type": "Select",
-                    "caption": "Used",
-                    "options": [
-                        {
-                            "label": "Opcache-GUI",
-                            "value": "opcache-gui/index.php"
-                        },
-                        {
-                            "label": "Opcache-Status",
-                            "value": "opcache-status/opcache.php"
-                        }
-                    ]
+                    "label": "OPcache Status",
+                    "value": "opcache-status/opcache.php"
                 }
-            ],
-    "actions":
-            []
+            ]
+        },
+        {
+            "type": "Label",
+            "caption": "Used library's:"
+        },
+        {
+            "type": "Label",
+            "caption": "opcache-gui: https://github.com/amnuts/opcache-gui"
+        },
+        {
+            "type": "Label",
+            "caption": "OPcache Status: https://github.com/rlerdorf/opcache-status"
+        }
+    ],
+    "actions": []
 }

@@ -3,9 +3,12 @@
     "name": "OpCacheModule",
     "type": 3,
     "vendor": "Nall-chan",
-    "aliases": ["OpCache Information"],
+    "aliases": [
+        "OpCache Information"
+    ],
     "parentRequirements": [],
     "childRequirements": [],
     "implemented": [],
-    "prefix": "OPCACHE"
+    "prefix": "OPCACHE",
+    "url": "https://github.com/Nall-chan/OpCache/blob/master/OpCacheModule"
 }
