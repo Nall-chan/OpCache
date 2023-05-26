@@ -23,7 +23,7 @@ require_once __DIR__ . '/../libs/OpCacheTraits.php';  // diverse Klassen
  * @method void RegisterHook(string $WebHook)
  * @method void UnregisterHook(string $WebHook)
  */
-class OpCacheInfoSite extends IPSModule
+class OpCacheInfoSite extends IPSModuleStrict
 {
     use \OpCacheModule\WebhookHelper;
     use \OpCacheModule\VariableProfileHelper;
@@ -32,7 +32,7 @@ class OpCacheInfoSite extends IPSModule
     /**
      * Interne Funktion des SDK.
      */
-    public function Create()
+    public function Create(): void
     {
         parent::Create();
         $this->RegisterPropertyString('SubmodulePath', 'opcache-status/opcache.php');
@@ -41,7 +41,7 @@ class OpCacheInfoSite extends IPSModule
     /**
      * Interne Funktion des SDK.
      */
-    public function Destroy()
+    public function Destroy(): void
     {
         if (!IPS_InstanceExists($this->InstanceID)) {
             $this->UnregisterHook('/hook/Opcache' . $this->InstanceID);
@@ -52,7 +52,7 @@ class OpCacheInfoSite extends IPSModule
     /**
      * Interne Funktion des SDK.
      */
-    public function ApplyChanges()
+    public function ApplyChanges(): void
     {
         parent::ApplyChanges();
 
@@ -61,7 +61,7 @@ class OpCacheInfoSite extends IPSModule
         }
     }
 
-    public function GetConfigurationForm()
+    public function GetConfigurationForm(): string
     {
         $isEnabled = @IPS_GetOption('OPcacheSupport');
         $Form = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
@@ -78,20 +78,20 @@ class OpCacheInfoSite extends IPSModule
                 . 'if ($result) echo "' . $this->Translate('Please restart IPS to activate OPCache!') . '";'
                 . 'else echo "' . $this->Translate('This Version of IPS not support OPCache.') . '"'
             ];
-            $Form['actions'][] = $Warning;
-            $Form['actions'][] = $Button;
+            array_unshift($Form['actions'], $Warning);
+            array_unshift($Form['actions'], $Button);
+        } else {
+            $Button = [
+                'onClick' => 'echo "/hook/Opcache' . $this->InstanceID . '";',
+                'label'   => 'Open Webhook',
+                'type'    => 'Button',
+                'link'    => true];
+            array_unshift($Form['actions'], $Button);
         }
-
-        $Button = [
-            'onClick' => 'echo "/hook/Opcache' . $this->InstanceID . '";',
-            'label'   => 'Open Webhook',
-            'type'    => 'Button',
-            'link'    => true];
-        $Form['actions'][] = $Button;
         return json_encode($Form);
     }
 
-    protected function ProcessHookdata()
+    protected function ProcessHookdata(): void
     {
         $path = $this->ReadPropertyString('SubmodulePath');
         include __DIR__ . '/../libs/' . $path;

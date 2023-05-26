@@ -21,7 +21,7 @@ require_once __DIR__ . '/../libs/OpCacheTraits.php';  // diverse Klassen
  *
  * @method void RegisterProfileFloat(string $Name, string $Icon, string $Prefix, string $Suffix, float $MinValue, float $MaxValue, float $StepSize, int $Digits)
  */
-class OpCacheModule extends IPSModule
+class OpCacheModule extends IPSModuleStrict
 {
     use \OpCacheModule\DebugHelper;
     use \OpCacheModule\VariableProfileHelper;
@@ -59,7 +59,7 @@ class OpCacheModule extends IPSModule
     /**
      * Interne Funktion des SDK.
      */
-    public function Create()
+    public function Create(): void
     {
         parent::Create();
         $this->RegisterPropertyInteger('Interval', 0);
@@ -69,7 +69,7 @@ class OpCacheModule extends IPSModule
     /**
      * Interne Funktion des SDK.
      */
-    public function Destroy()
+    public function Destroy(): void
     {
         parent::Destroy();
     }
@@ -77,7 +77,7 @@ class OpCacheModule extends IPSModule
     /**
      * Interne Funktion des SDK.
      */
-    public function ApplyChanges()
+    public function ApplyChanges(): void
     {
         $this->RegisterMessage(0, IPS_KERNELSTARTED);
         $this->RegisterProfileFloat('OpCache.MB', 'Database', '', ' MB', 0, 0, 0, 3);
@@ -106,7 +106,7 @@ class OpCacheModule extends IPSModule
      * @param int       $Message
      * @param array|int $Data
      */
-    public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
+    public function MessageSink(int $TimeStamp, int $SenderID, int $Message, array $Data): void
     {
         switch ($Message) {
             case IPS_KERNELSTARTED:
@@ -117,7 +117,7 @@ class OpCacheModule extends IPSModule
         }
     }
 
-    public function GetConfigurationForm()
+    public function GetConfigurationForm(): string
     {
         $isEnabled = @IPS_GetOption('OPcacheSupport');
         $isLoaded = extension_loaded('Zend OPcache');
@@ -134,8 +134,8 @@ class OpCacheModule extends IPSModule
                 . 'if ($result) echo "' . $this->Translate('Please restart IPS to activate OPCache!') . '";'
                 . 'else echo "' . $this->Translate('This Version of IPS not support OPCache.') . '"'
             ];
-            $Form['actions'][0] = $Warning;
-            $Form['actions'][1] = $Button;
+            $Form['actions'][0] = $Button;
+            array_unshift($Form['actions'], $Warning);
             return json_encode($Form);
         }
         if (!$isLoaded) {
@@ -147,7 +147,7 @@ class OpCacheModule extends IPSModule
                 'type'  => 'Label',
                 'label' => 'Restart IPS to enable OPCache!'
             ];
-            $Form['actions'][0] = $Warning;
+            array_unshift($Form['actions'], $Warning);
             $Form['actions'][1] = $Warning2;
             return json_encode($Form);
         }
@@ -161,7 +161,7 @@ class OpCacheModule extends IPSModule
      *
      * @return bool True wenn Befehl erfolgreich ausgeführt wurde, sonst false.
      */
-    public function Update()
+    public function Update(): bool
     {
         if (!extension_loaded('Zend OPcache')) {
             echo $this->Translate('Zend OPCache ist not loaded.');
@@ -176,16 +176,20 @@ class OpCacheModule extends IPSModule
         }
         $config = opcache_get_configuration();
         $overview = array_merge(
-                $status['memory_usage'], $status['opcache_statistics'], [
-                    'used_memory_percentage' => 100 * (
-                    ($status['memory_usage']['used_memory'] + $status['memory_usage']['wasted_memory']) / $config['directives']['opcache.memory_consumption']),
-                    'free_memory_percentage' => 100 * (
-                    $status['memory_usage']['free_memory'] / $config['directives']['opcache.memory_consumption']),
-                    'total_memory'           => (float) $config['directives']['opcache.memory_consumption'] / 1024 / 1024,
-                    'used_memory'            => $status['memory_usage']['used_memory'] / 1024 / 1024,
-                    'free_memory'            => $status['memory_usage']['free_memory'] / 1024 / 1024,
-                    'wasted_memory'          => $status['memory_usage']['wasted_memory'] / 1024 / 1024,
-                ]
+            $status['memory_usage'],
+            $status['opcache_statistics'],
+            [
+                'used_memory_percentage' => 100 * (
+                    ($status['memory_usage']['used_memory'] + $status['memory_usage']['wasted_memory']) / $config['directives']['opcache.memory_consumption']
+                ),
+                'free_memory_percentage' => 100 * (
+                    $status['memory_usage']['free_memory'] / $config['directives']['opcache.memory_consumption']
+                ),
+                'total_memory'           => (float) $config['directives']['opcache.memory_consumption'] / 1024 / 1024,
+                'used_memory'            => $status['memory_usage']['used_memory'] / 1024 / 1024,
+                'free_memory'            => $status['memory_usage']['free_memory'] / 1024 / 1024,
+                'wasted_memory'          => $status['memory_usage']['wasted_memory'] / 1024 / 1024,
+            ]
         );
         unset($overview['oom_restarts']);
         unset($overview['hash_restarts']);
@@ -197,7 +201,7 @@ class OpCacheModule extends IPSModule
         return true;
     }
 
-    protected function SetValue($Ident, $Value)
+    protected function SetValue(string $Ident, mixed $Value): bool
     {
         $IpsVarType = self::$VariableTyp[$Ident];
         if (array_key_exists($Ident, self::$VariableProfile)) {
@@ -206,10 +210,10 @@ class OpCacheModule extends IPSModule
             $Profile = '';
         }
         $this->MaintainVariable($Ident, $this->Translate($Ident), $IpsVarType, $Profile, 0, true);
-        parent::SetValue($Ident, $Value);
+        return parent::SetValue($Ident, $Value);
     }
 
-    private function SetInterval(int $Seconds)
+    private function SetInterval(int $Seconds): void
     {
         $msec = $Seconds < 5 ? 0 : $Seconds * 1000;
         $this->SetTimerInterval('Update', $msec);
