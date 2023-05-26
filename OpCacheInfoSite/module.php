@@ -78,16 +78,16 @@ class OpCacheInfoSite extends IPSModule
                 . 'if ($result) echo "' . $this->Translate('Please restart IPS to activate OPCache!') . '";'
                 . 'else echo "' . $this->Translate('This Version of IPS not support OPCache.') . '"'
             ];
-            $Form['actions'][] = $Warning;
-            $Form['actions'][] = $Button;
+            array_unshift($Form['actions'], $Warning);
+            array_unshift($Form['actions'], $Button);
+        } else {
+            $Button = [
+                'onClick' => 'echo "/hook/Opcache' . $this->InstanceID . '";',
+                'label'   => 'Open Webhook',
+                'type'    => 'Button',
+                'link'    => true];
+            array_unshift($Form['actions'], $Button);
         }
-
-        $Button = [
-            'onClick' => 'echo "/hook/Opcache' . $this->InstanceID . '";',
-            'label'   => 'Open Webhook',
-            'type'    => 'Button',
-            'link'    => true];
-        $Form['actions'][] = $Button;
         return json_encode($Form);
     }
 

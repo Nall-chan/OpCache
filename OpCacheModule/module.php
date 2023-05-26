@@ -134,8 +134,8 @@ class OpCacheModule extends IPSModule
                 . 'if ($result) echo "' . $this->Translate('Please restart IPS to activate OPCache!') . '";'
                 . 'else echo "' . $this->Translate('This Version of IPS not support OPCache.') . '"'
             ];
-            $Form['actions'][0] = $Warning;
-            $Form['actions'][1] = $Button;
+            $Form['actions'][0] = $Button;
+            array_unshift($Form['actions'], $Warning);
             return json_encode($Form);
         }
         if (!$isLoaded) {
@@ -147,7 +147,7 @@ class OpCacheModule extends IPSModule
                 'type'  => 'Label',
                 'label' => 'Restart IPS to enable OPCache!'
             ];
-            $Form['actions'][0] = $Warning;
+            array_unshift($Form['actions'], $Warning);
             $Form['actions'][1] = $Warning2;
             return json_encode($Form);
         }
