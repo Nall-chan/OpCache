@@ -7,8 +7,9 @@
             "Enable OPCache": "Aktiviere OPCache",
             "Please restart IPS to activate OPCache!": "Bitte IPS neustarten um den OPCache zu aktivieren!",
             "This Version of IPS not support OPCache.": "Diese Version von IPS unterstützt keinen OPCache.",
-            "Open Webhook": "\u00f6ffne Webhook",
-            "Used library's:":"Benutzte Bibliotheken:"
+            "Open Webhook": "öffne Webhook",
+            "Used library's:": "Benutzte Bibliotheken:",
+            "This module is free for non-commercial use,\r\nDonations in support of the author are accepted here:": "Dieses Modul ist für die nicht kommerzielle Nutzung kostenlos,\r\nSchenkungen als Unterstützung für den Autor werden hier akzeptiert:"
         }
     }
 }

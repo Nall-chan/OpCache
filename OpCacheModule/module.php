@@ -18,6 +18,8 @@ require_once __DIR__ . '/../libs/OpCacheTraits.php';  // diverse Klassen
 /**
  * OpCacheModule ist die Klasse für die Darstellung von Informationen des PHP OpCache in IPS.
  * Erweitert ipsmodule.
+ *
+ * @method void RegisterProfileFloat(string $Name, string $Icon, string $Prefix, string $Suffix, float $MinValue, float $MaxValue, float $StepSize, int $Digits)
  */
 class OpCacheModule extends IPSModule
 {
