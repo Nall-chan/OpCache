@@ -1,10 +1,12 @@
 [![SDK](https://img.shields.io/badge/Symcon-PHPModul-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
-[![Version](https://img.shields.io/badge/Modul%20Version-2.0-blue.svg)]()[![Version](https://img.shields.io/badge/Symcon%20Version-5.1%20%3E-green.svg)](https://www.symcon.de/service/dokumentation/installation/migrationen/v50-v51-q2-2019/)  
+[![Version](https://img.shields.io/badge/Modul%20Version-2.02-blue.svg)]()
+![Version](https://img.shields.io/badge/Symcon%20Version-7.0%20%3E-green.svg)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![Check Style](https://github.com/Nall-chan/OpCache/workflows/Check%20Style/badge.svg)](https://github.com/Nall-chan/OpCache/actions) 
-[![Run Tests](https://github.com/Nall-chan/OpCache/workflows/Run%20Tests/badge.svg)](https://github.com/Nall-chan/OpCache/actions) 
+[![Run Tests](https://github.com/Nall-chan/OpCache/workflows/Run%20Tests/badge.svg)](https://github.com/Nall-chan/OpCache/actions)  
+[![Spenden](https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donate_SM.gif)](../README.md#6-spenden)  
 
-# OpCache Info-Website  
+# OpCache Info-Website  <!-- omit in toc -->  
 Bereitstellung des Status von dem OpCache der PHP Laufzeitumgebung als Website.  
 
 ## Dokumentation <!-- omit in toc -->

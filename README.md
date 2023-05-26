@@ -1,6 +1,6 @@
 [![SDK](https://img.shields.io/badge/Symcon-PHPModul-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
-[![Version](https://img.shields.io/badge/Modul%20Version-2.0-blue.svg)]()
-[![Version](https://img.shields.io/badge/Symcon%20Version-5.1%20%3E-green.svg)](https://www.symcon.de/service/dokumentation/installation/migrationen/v50-v51-q2-2019/)  
+[![Version](https://img.shields.io/badge/Modul%20Version-2.02-blue.svg)]()
+![Version](https://img.shields.io/badge/Symcon%20Version-5.1%20%3E-green.svg)  
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![Check Style](https://github.com/Nall-chan/OpCache/workflows/Check%20Style/badge.svg)](https://github.com/Nall-chan/OpCache/actions) 
 [![Run Tests](https://github.com/Nall-chan/OpCache/workflows/Run%20Tests/badge.svg)](https://github.com/Nall-chan/OpCache/actions) 
@@ -50,6 +50,9 @@ IPS-Modul für die Visualisierung des PHP OpCache
 
 ## 5. Changelog
 
+Version 2.02:
+ - Version für IPS 7.0  
+  
 Version 2.0:  
  - Release für IPS 5.1 und den Module-Store   
 

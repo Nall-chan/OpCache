@@ -3,10 +3,10 @@
     "author": "Michael Tröger",
     "name": "OpCache Library",
     "url": "https://github.com/Nall-chan/OpCache",
-    "version": "2.01",
-    "build": 150,
-    "date": 1596631275,
+    "version": "2.02",
+    "build": 151,
+    "date": 1685093851,
     "compatibility": {
-        "version": "5.1"
+        "version": "7.0"
     }
 }
