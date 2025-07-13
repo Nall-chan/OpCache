@@ -20,12 +20,11 @@ require_once __DIR__ . '/../libs/OpCacheTraits.php';  // diverse Klassen
  * Erweitert ipsmodule.
  *
  * @method bool SendDebug(string $Message, mixed $Data, int $Format)
- * @method void RegisterHook(string $WebHook)
- * @method void UnregisterHook(string $WebHook)
+ * @method bool RegisterHook(string $WebHook)
+ *
  */
 class OpCacheInfoSite extends IPSModuleStrict
 {
-    use \OpCacheModule\WebhookHelper;
     use \OpCacheModule\VariableProfileHelper;
     use \OpCacheModule\DebugHelper;
 
@@ -36,17 +35,6 @@ class OpCacheInfoSite extends IPSModuleStrict
     {
         parent::Create();
         $this->RegisterPropertyString('SubmodulePath', 'opcache-status/opcache.php');
-    }
-
-    /**
-     * Interne Funktion des SDK.
-     */
-    public function Destroy(): void
-    {
-        if (!IPS_InstanceExists($this->InstanceID)) {
-            $this->UnregisterHook('/hook/Opcache' . $this->InstanceID);
-        }
-        parent::Destroy();
     }
 
     /**

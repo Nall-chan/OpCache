@@ -16,7 +16,6 @@ declare(strict_types=1);
 
 namespace OpCacheModule;
 
-eval('declare(strict_types=1);namespace OpCacheModule {?>' . file_get_contents(__DIR__ . '/../libs/helper/WebhookHelper.php') . '}');
 eval('declare(strict_types=1);namespace OpCacheModule {?>' . file_get_contents(__DIR__ . '/../libs/helper/VariableProfileHelper.php') . '}');
 eval('declare(strict_types=1);namespace OpCacheModule {?>' . file_get_contents(__DIR__ . '/../libs/helper/DebugHelper.php') . '}');
 
